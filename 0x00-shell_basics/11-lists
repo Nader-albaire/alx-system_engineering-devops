@@ -1,0 +1,6 @@
+#!/bin/bash
+ls -lA
+cd ..
+ls -lA
+cd /boot
+ls -lA
