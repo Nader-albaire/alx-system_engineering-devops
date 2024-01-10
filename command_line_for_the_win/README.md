@@ -1,6 +1,7 @@
 Project Title: Command Line for the Win - Bash Scripting Challenge.
 
 
+
 Description:
 
 "Command Line for the Win presents an interactive Bash Scripting Challenge, a game that puts your command line prowess to the test. This engaging challenge is conducted entirely through the command line interface, featuring progressively intricate tasks to hone and elevate your Bash scripting skills.
