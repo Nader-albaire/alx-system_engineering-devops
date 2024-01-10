@@ -1,4 +1,4 @@
-Project Title: Command Line for the Win - Bash Scripting Challenge
+Project Title: Command Line for the Win - Bash Scripting Challenge.
 
 
 Description:
