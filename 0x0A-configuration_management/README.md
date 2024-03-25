@@ -1,7 +1,6 @@
 Configuration Management Project
 Overview
 
-
 This project delves into the realm of configuration management, a crucial aspect of DevOps and system administration. Drawing inspiration from experiences like SlideShare's Skynet incident, where automated remediation proved invaluable, this project emphasizes the importance of tools like Puppet in managing infrastructure efficiently.
 Project Timeline
 
