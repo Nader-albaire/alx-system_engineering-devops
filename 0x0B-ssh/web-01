@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
-# Server-01 login
 
+# Change directory to the ~/.ssh directory
+cd ~/.ssh || exit
 
-eval $("ssh-agent")
+# Start SSH agent
+eval $(ssh-agent)
 
-ssh-add ~/./ssh/school
+# Add SSH private key to agent
+ssh-add school
 
+# SSH into the server
+ssh -i school ubuntu@54.237.70.148
 
-ssh ubuntu@54.237.70.148
