@@ -2,5 +2,3 @@
 # Connect to your server
 ssh -i ~/.ssh/school ubuntu@54.237.70.148
 
-chmod 600 ~/.ssh/school
-

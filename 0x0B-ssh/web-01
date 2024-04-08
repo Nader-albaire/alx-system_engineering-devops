@@ -12,5 +12,3 @@ ssh-add school
 # SSH into the server
 ssh -i school ubuntu@54.237.70.148
 
-chmod 600 ~/.ssh/school
-
