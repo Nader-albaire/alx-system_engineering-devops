@@ -1,6 +1,24 @@
 #!/usr/bin/env bash
 # configures a server to listening on port 80 of all servers active IPv4 IPs
 
-sudo sed -i "s/8080/80/" /etc/nginx/sites-enabled/default
+# Create a symbolic link for the default Nginx configuration
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# Restart Nginx service to apply the changes
 sudo service nginx restart
-echo "" | sudo dd status=none of=/run/nginx.pid
+
+# Stop Nginx service to ensure it's not running
+sudo service nginx stop
+
+# Kill all Nginx processes
+sudo pkill nginx
+
+# Remove Nginx package and its configuration files
+sudo apt-get purge nginx nginx-common -y
+
+# Remove Nginx directories
+sudo rm -rf /etc/nginx /etc/nginx/sites-enabled /etc/nginx/sites-available /var/log/nginx /var/www /usr/share/nginx /usr/share/doc/nginx
+
+# Remove Nginx user and group
+sudo deluser --remove-home nginx
+sudo delgroup nginx
