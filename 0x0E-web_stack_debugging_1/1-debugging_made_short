@@ -1,10 +1,4 @@
 #!/usr/bin/env bash
-
-# Changes port in Nginx configuration file
 sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
-
-# Restart Nginx service
 service nginx restart
-
-# Kill Nginx process to ensure proper restart
 kill -9 "$(cat /var/run/nginx.pid)"
