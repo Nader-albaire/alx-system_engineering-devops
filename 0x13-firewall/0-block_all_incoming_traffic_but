@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+# Configuration a ufw firewall to block to block all incoming traffics
+# allow TCP ports 22, 8080, 80, and 443.
+
+
 echo -e "Updating\n"
 
 sudo apt-get update
@@ -19,5 +24,6 @@ sudo ufw allow 443
 
 # Enable Fire Wall
 sudo ufw enable
+sudo ufw status verbose
 
 echo -e "Process Completed.\n"
