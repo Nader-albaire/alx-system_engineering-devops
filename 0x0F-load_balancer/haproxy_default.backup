@@ -1,17 +1,14 @@
-
 defaults
-  mode http
-  timeout client 15s
-  timeout connect 10s
-  timeout server 15s
-  timeout http-request 10s
+    mode http
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
 
-frontend clickviral-tech-frontend
+frontend http_front
     bind *:80
-    default_backend clickviral-tech-backend
+    default_backend http_back
 
-backend clickviral-tech-backend
+backend http_back
     balance roundrobin
-    server 151666-web-01 100.25.190.21:80 check
-    server 151666-web-02 54.160.77.90:80 check
-
+    server web-01 100.25.19.221:80 check
+    server web-02 18.233.65.175:80 check
