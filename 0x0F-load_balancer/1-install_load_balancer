@@ -1,5 +1,6 @@
 #!/bin/bash
 
+<<<<<<< HEAD
 # Update package repositories and install HAProxy
 sudo apt-get update
 sudo apt-get install -y haproxy
@@ -27,3 +28,64 @@ sudo systemctl restart haproxy
 
 # Verify HAProxy status
 sudo systemctl status haproxy
+=======
+echo -e "Updating and doing some minor checks...\n"
+
+function install() {
+    command -v "$1" &> /dev/null
+
+    if [ $? -ne 0 ]; then
+        echo -e "       Installing: $1\n"
+        sudo apt-get update -y -qq && \
+        sudo apt-get install -y "$1" -qq
+        echo -e "\n"
+    else
+        echo -e "       ${1} is already installed.\n"
+    fi
+}
+
+install haproxy
+
+echo -e "\nSetting up some minor stuff.\n"
+
+# Create HAProxy directory if not exists
+sudo mkdir -p /etc/haproxy/
+
+# Create HAProxy configuration file if not exists
+if [ ! -f /etc/haproxy/haproxy.cfg ]; then
+    echo "Creating HAProxy configuration file..."
+    server_config="
+    defaults
+      mode http
+      timeout client 15s
+      timeout connect 10s
+      timeout server 15s
+      timeout http-request 10s
+
+    frontend futechno-tech-frontend
+        bind *:80
+        default_backend futechno-tech-backend
+
+    backend futechno-tech-backend
+        balance roundrobin
+        server 521239-web-01 54.237.70.148 check
+        server 521239-web-01 54.144.136.149 check
+    "
+    echo "$server_config" | sudo tee /etc/haproxy/haproxy.cfg >/dev/null
+fi
+
+# Enable HAProxy to be started by init script
+echo "ENABLED=1" | sudo tee /etc/default/haproxy >/dev/null
+
+echo "Configured - Roundrobin On web-01 & web-02"
+
+# Start or restart HAProxy service
+if ! pgrep haproxy >/dev/null; then
+    echo "Starting HAProxy service..."
+    sudo systemctl start haproxy
+else
+    echo "Restarting HAProxy service..."
+    sudo systemctl restart haproxy
+fi
+
+>>>>>>> e89ec412e8eb5d8c8b9cb5770d0691454d7ed06f
