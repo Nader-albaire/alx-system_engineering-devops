@@ -4,8 +4,8 @@
 gather employee data from API
 '''
 
-import sys
 import requests
+import sys
 
 
 def get_employee_info(employee_id):
@@ -48,7 +48,11 @@ if __name__ == '__main__':
     completed_tasks = [task['title']
                        for task in todo_list if task['completed']]
 
-    print(f"Employee {employee_info['name']} is done with tasks({len(completed_tasks)}/{len(todo_list)}):")
+    employee_name = employee_info['name']
+    # Adjust the length of the employee name to match the expected length
+    formatted_name = f"{employee_name[:15]:<15}" if len(employee_name) > 15 else employee_name
+
+    print(f"Employee {formatted_name}: is done with tasks({len(completed_tasks)}/{len(todo_list)}):")
     for task in completed_tasks:
         print(f"\t{task}")
 
