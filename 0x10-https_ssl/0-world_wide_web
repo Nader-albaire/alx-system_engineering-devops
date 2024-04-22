@@ -1,43 +1,25 @@
-#!/usr/bin/env bash
-
-# Function to display information about a specific subdomain
-function subdomain_check {
-    local domain="$1"
-    local subdomain="$2"
-
-    # Use dig to get DNS information for the subdomain
-    local dns_info=$(dig "${subdomain}.${domain}" | awk '/^;; ANSWER SECTION:/{getline; print}')
-
-    # Extract the record type and destination IP address
-    local record_type=$(echo "$dns_info" | awk '{print $4}')
-    local destination=$(echo "$dns_info" | awk '{print $5}')
-
-    # Output the information
-    printf "The subdomain %s is a %s record and points to %s\n" "$subdomain" "$record_type" "$destination"
-}
-
-# Function to display information about default subdomains
+sh script that will display information about subdomains.
 function domain_check {
-    local domain="$1"
-    local subdomains=("www" "lb-01" "web-01" "web-02")
+	domain_names=("www" "lb-01" "web-01" "web-02")
 
-    # Loop through default subdomains and display information
-    for subdomain in "${subdomains[@]}"; do
-        subdomain_check "$domain" "$subdomain"
-    done
+	for i in "${domain_names[@]}";
+	do
+		dig "${i}"."$1" | grep -A1 'ANSWER SECTION:' | \
+		awk 'FNR == 2 {printf "The subdomain %s is a %s record and points to %s\n", var, $4, $5}' var="$i"
+	done
 }
 
-# Main script
+function subdomain_check {
+	dig "${2}"."$1" | grep -A1 'ANSWER SECTION:' | \
+	awk 'FNR == 2 {printf "The subdomain %s is a %s record and points to %s\n", var, $4, $5}' var="$2"
+}
 
-# Check if domain parameter is provided
-if [[ $# -lt 1 ]]; then
-    echo "*** Provide domain name ***"
-    exit 1
-fi
-
-# Check if both domain and subdomain parameters are provided
-if [[ $# -eq 2 ]]; then
-    subdomain_check "$1" "$2"
+if [ $# -lt 1 ]
+then
+	echo "*** Provide domain name ***"
+elif [ $# -eq 1 ]
+then
+	domain_check "$1";
 else
-    domain_check "$1"
+	subdomain_check "$1" "$2";
 fi
