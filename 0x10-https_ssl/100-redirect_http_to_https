@@ -1,4 +1,5 @@
-global
+
+bal
         log /dev/log    local0
         log /dev/log    local1 notice
         chroot /var/lib/haproxy
@@ -41,11 +42,11 @@ frontend futechno-frontend
         default_backend futechno-backend
 
 frontend futechno-frontend-https
-        bind *:443 ssl crt /etc/haproxy/certs/futechno.tech.pem
+        bind *:443 ssl crt /etc/haproxy/certs/www.futechno.tech.pem
         http-request set-header X-Forwarded-Proto https
         default_backend futechno-backend
 
-backend futechno-tech-backend
-    balance roundrobin
-    server 521239-web-01 54.237.70.148 check
-    server 521239-web-01 54.144.136.149 check
+backend futechno-backend
+        balance roundrobin
+        server 521239-web-01 100.26.122.13:80 check
+        server 521239-web-02 18.234.145.26:80 check
