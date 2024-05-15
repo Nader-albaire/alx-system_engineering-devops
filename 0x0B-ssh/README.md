@@ -1,4 +1,4 @@
-# 0x0B. SSH
+# 0x0B.SSH
 
 <table class="table table-striped">
   <thead>
