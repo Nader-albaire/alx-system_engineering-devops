@@ -1,1 +1,17 @@
-Lets see
+#!/bin/bash
+
+# Get the PIDs of Gunicorn processes
+PIDS=$(ps auxf | grep '[g]unicorn' | awk '{print $2}')
+
+# Iterate over each PID and reload the Gunicorn process
+for PID in $PIDS
+do
+    echo "Reloading Gunicorn process with PID $PID..."
+    kill -HUP $PID
+done
+
+# Verify that the workers have been renewed
+echo "Verifying Gunicorn workers..."
+ps auxf | grep '[g]unicorn'
+
+echo "Graceful reload of Gunicorn completed."
